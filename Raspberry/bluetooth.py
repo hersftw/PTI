@@ -1,4 +1,4 @@
-import serial
+import serial, cgi, os, re, sys, string, time
 from time import sleep
  
 bluetoothSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600 )
@@ -11,6 +11,7 @@ while count == None:
 	except:
 		pass    # Ignore any errors that may occur and try again
 param = "dev"+str(dev)+":"+str(count)
-#bluetoothSerial.write( str(param) )
-bluetoothSerial.write(str(dev))
+#param = "dev"+form['dev'].value+":"+form['state'].value
+bluetoothSerial.write( str(param) )
+#bluetoothSerial.write(str(dev))
 print bluetoothSerial.readline()
