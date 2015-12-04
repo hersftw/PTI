@@ -14,7 +14,6 @@ print "<p>"+state+"</p>"
 
 tempSerial = serial.Serial( "/dev/ttyUSB0", baudrate=9600)
 ledSerial = serial.Serial( "/dev/ttyACM0", baudrate=9600)
-
 #sleep(2)
 
 #res = device+":"+state
