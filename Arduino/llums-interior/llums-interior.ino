@@ -24,7 +24,7 @@ const long interval = 200;    // Interval sonar (milliseconds)
 
 boolean change;
  
-void auto() {
+void autom() {
   time = millis();  
   if ((time -lasttime) >= 2000) last = 0;  
    
@@ -133,8 +133,8 @@ String activada = "0";
 
 void loop() { 
   if (activada == "0") digitalWrite(RELE, HIGH);
-  else if (activada ==1) digitalWrite(RELE, LOW);
-  else auto();
+  else if (activada == "1") digitalWrite(RELE, LOW);
+  else autom();
   
   if(Serial.available() > 0) {
     activada = Serial.readString();
