@@ -24,24 +24,7 @@ const long interval = 200;    // Interval sonar (milliseconds)
 
 boolean change;
  
-void setup() {
-  Serial.begin(9600);  
- 
-  pinMode(LED1, OUTPUT);           // LED OUTPUT 
-  pinMode(LED2, OUTPUT);           // LED OUTPUT 
-  pinMode(LED3, OUTPUT);           // LED OUTPUT 
-  pinMode(LED4, OUTPUT);           // LED OUTPUT 
-  pinMode(RELE, OUTPUT);           // LED OUTPUT 
-  
-  pinMode(TRIG1, OUTPUT);         // ping sensor trigger OUTPUT
-  pinMode(ECHO1, INPUT);          // ping sensor echo INPUT
-  pinMode(TRIG2, OUTPUT);         // ping sensor2 trigger OUTPUT
-  pinMode(ECHO2, INPUT);          // ping sensor2 echo INPUT 
-  digitalWrite(RELE, HIGH);
-}
- 
-void loop() { 
-  
+void auto() {
   time = millis();  
   if ((time -lasttime) >= 2000) last = 0;  
    
@@ -128,6 +111,35 @@ void loop() {
   
   
   //digitalWrite(LED, ledState);
+}
+ 
+void setup() {
+  Serial.begin(9600);  
+ 
+  pinMode(LED1, OUTPUT);           // LED OUTPUT 
+  pinMode(LED2, OUTPUT);           // LED OUTPUT 
+  pinMode(LED3, OUTPUT);           // LED OUTPUT 
+  pinMode(LED4, OUTPUT);           // LED OUTPUT 
+  pinMode(RELE, OUTPUT);           // LED OUTPUT 
+  
+  pinMode(TRIG1, OUTPUT);         // ping sensor trigger OUTPUT
+  pinMode(ECHO1, INPUT);          // ping sensor echo INPUT
+  pinMode(TRIG2, OUTPUT);         // ping sensor2 trigger OUTPUT
+  pinMode(ECHO2, INPUT);          // ping sensor2 echo INPUT 
+  digitalWrite(RELE, HIGH);
+}
+
+String activada = "0";
+
+void loop() { 
+  if (activada == "0") digitalWrite(RELE, HIGH);
+  else if (activada ==1) digitalWrite(RELE, LOW);
+  else auto();
+  
+  if(Serial.available() > 0) {
+    activada = Serial.readString();
+    Serial.println(activada);
+  }  
 }
     
 

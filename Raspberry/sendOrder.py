@@ -9,21 +9,37 @@ state = params['newstate'].value
 
 #print "Content-type: text/html\n\n"
 
-ledSerial = serial.Serial( "/dev/ttyACM0", baudrate=9600)
+outdoorSerial = serial.Serial( "/dev/ttyACM0", baudrate=9600)
+#outdoorSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600) #If using Bluetooth
+indoorSerial = serial.Serial( "/dev/ttyACM1", baudrate=9600)
+#indoorSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600) #If using Bluetooth
 tempSerial = serial.Serial( "/dev/ttyUSB0", baudrate=9600)
+#tempSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600) #If using Bluetooth
 alarmSerial = serial.Serial( "/dev/ttyUSB1", baudrate=9600)
-
-if device == "3": # Led/Rele
+#alarmSerial = serial.Serial( "/dev/rfcomm1", baudrate=9600) #If using Bluetooth
+	
+if device == "3": # Outdoor lights
 	m = random.getrandbits(256)
 	m = str(m)
 	hashm = hashlib.sha256(m).hexdigest()
-	ledSerial.write(m)
-	hashr = ledSerial.read(32)
+	outdoorSerial.write(m)
+	hashr = outdoorSerial.read(32)
 	hashr = hashr.encode('hex')
 	if hashr == hashm:
-		ledSerial.write(state)
-		state = ledSerial.readline()
+		outdoorSerial.write(state)
+		state = outdoorSerial.readline()
 
+if device == "4": # Indoor lights
+	m = random.getrandbits(256)
+	m = str(m)
+	hashm = hashlib.sha256(m).hexdigest()
+	indoorSerial.write(m)
+	hashr = indoorSerial.read(32)
+	hashr = hashr.encode('hex')
+	if hashr == hashm:
+		indoorSerial.write(state)
+		state = indoorSerial.readline()		
+		
 if device == "5": # Alarm
 	m = random.getrandbits(256)
 	m = str(m)
@@ -35,7 +51,7 @@ if device == "5": # Alarm
 		alarmSerial.write(state)
 		state = alarmSerial.readline()
 
-tempSerial.write("1") #Ask for the temperature
+tempSerial.write("1") # Everytime we get a POST request, we update the temperature
 tempS = tempSerial.readline()
 temp = int(float(tempS)+0.5)
 
