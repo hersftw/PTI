@@ -231,7 +231,7 @@ void alarm(int state)
       //Serial.println(" sec"); 
 
       Serial.println("3");      
-	  if (state == 1) { #Play a sound only if state == 1, else the alarm is silent
+	  if (state == 1) { //Play a sound only if state == 1, else the alarm is silent
 		  if (song == 1) {
 			zelda = "Song of Storms:d=4,o=5,b=180:8d6,8f6,d7,p,8d6,8f6,d7,p,e7,8p,8f7,8e7,8f7,8e7,8c7,a6,8p,a6,d6,8f6,8g6,2a6,8p,a6,d6,8f6,8g6,2e6,8p,8d6,8f6,d7,p,8d6,8f6,d7,p,e7,8p,8f7,8e7,8f7,8e7,8c7,a6,8p,a6,d6,8f6,8g6,a6,8p,a6,1d6";
 			play_rtttl(zelda);
